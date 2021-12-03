@@ -34,11 +34,28 @@
         },
         {
             "m_Id": "a85da5ecd1ea446ca8359df46f588409"
+        },
+        {
+            "m_Id": "8f0280e788fd4566b7ae19e66a2ab42a"
         }
     ],
     "m_GroupDatas": [],
     "m_StickyNoteDatas": [],
     "m_Edges": [
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8f0280e788fd4566b7ae19e66a2ab42a"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "4c5048d05b4f4940a4e0c3ecee8cfe04"
+                },
+                "m_SlotId": 0
+            }
+        },
         {
             "m_OutputSlot": {
                 "m_Node": {
@@ -73,8 +90,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 0.0,
-            "y": 200.0
+            "x": -3.200018882751465,
+            "y": 209.6000213623047
         },
         "m_Blocks": [
             {
@@ -87,10 +104,10 @@
                 "m_Id": "9e0e94d27b0f4d689a78d996d9c49136"
             },
             {
-                "m_Id": "2e4cb7fe62524ed7b406faeeaf760995"
+                "m_Id": "0d56e11eadbf4f0c9dabba60b2a9538a"
             },
             {
-                "m_Id": "0d56e11eadbf4f0c9dabba60b2a9538a"
+                "m_Id": "2e4cb7fe62524ed7b406faeeaf760995"
             },
             {
                 "m_Id": "7d74a6f8cc3e45c281f97aad939ee6eb"
@@ -228,10 +245,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 10.399988174438477,
+            "y": 380.79998779296877,
+            "width": 200.00001525878907,
+            "height": 40.800018310546878
         }
     },
     "m_Slots": [
@@ -247,6 +264,19 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Smoothness"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
+    "m_ObjectId": "3f1cf3908a234910ae7a7db7837e7236",
+    "m_Id": 2,
+    "m_DisplayName": "HeightmapSampler",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "HeightmapSampler",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {
@@ -338,6 +368,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "70e9832999284e5e9432c0c625fe4d38",
+    "m_Id": 3,
+    "m_DisplayName": "Amplitude",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Amplitude",
+    "m_StageCapability": 2,
+    "m_Value": 100.0,
+    "m_DefaultValue": 1.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "7d74a6f8cc3e45c281f97aad939ee6eb",
     "m_Group": {
@@ -367,6 +412,72 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Occlusion"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.UVMaterialSlot",
+    "m_ObjectId": "8a8909e8e79b4dd89c1227e06cc02fa8",
+    "m_Id": 4,
+    "m_DisplayName": "UVs",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "UVs",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": [],
+    "m_Channel": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.ParallaxMappingNode",
+    "m_ObjectId": "8f0280e788fd4566b7ae19e66a2ab42a",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Parallax Mapping",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -426.39996337890627,
+            "y": 511.20001220703127,
+            "width": 281.6000061035156,
+            "height": 149.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f674735e3ac2425a99d0dd7761603d91"
+        },
+        {
+            "m_Id": "3f1cf3908a234910ae7a7db7837e7236"
+        },
+        {
+            "m_Id": "70e9832999284e5e9432c0c625fe4d38"
+        },
+        {
+            "m_Id": "8a8909e8e79b4dd89c1227e06cc02fa8"
+        },
+        {
+            "m_Id": "b87ec45b39e64bedb608912e8c12c10f"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    }
 }
 
 {
@@ -510,10 +621,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -288.0,
-            "y": 15.200005531311036,
-            "width": 208.00003051757813,
-            "height": 277.5999755859375
+            "x": -639.2000122070313,
+            "y": 213.6000213623047,
+            "width": 208.00001525878907,
+            "height": 278.3999938964844
         }
     },
     "m_Slots": [
@@ -528,6 +639,27 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
+    "m_ObjectId": "b87ec45b39e64bedb608912e8c12c10f",
+    "m_Id": 0,
+    "m_DisplayName": "ParallaxUVs",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "ParallaxUVs",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -692,5 +824,23 @@
     "m_TwoSided": false,
     "m_AlphaClip": false,
     "m_CustomEditorGUI": ""
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "f674735e3ac2425a99d0dd7761603d91",
+    "m_Id": 1,
+    "m_DisplayName": "Heightmap",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Heightmap",
+    "m_StageCapability": 2,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"0ceec2eacd5d71e42a6ab62fd6ddc65a\",\"type\":3}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 1
 }
 
