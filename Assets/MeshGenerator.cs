@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(MeshFilter))]
 public class MeshGenerator : MonoBehaviour
@@ -11,7 +12,8 @@ public class MeshGenerator : MonoBehaviour
     int[] triangles;
     Color[] colours;
 
-    public float scale = 20f;
+    public float scale = 1f;
+    //public float noise = 0.5f;
 
     public float offsetX;
     public float offsetZ;
@@ -23,6 +25,20 @@ public class MeshGenerator : MonoBehaviour
 
     private float minHeight;
     private float maxHeight;
+
+    public float octaveLayers = 1;
+    public float frequency = 1;
+    public float layer1Amplitude = 1;
+    public float layer2Frequencies = 1;
+    public float layer2Amplitude = 1;
+
+    public float MountainFrequencies = 4;
+    public float MountainAmplitude = 2;
+
+    public Slider octaveSlider;
+    public Slider frequencySlider;
+    public Slider scaleSlider;
+    public GameObject loadingText;
 
     void Start()
     {
@@ -37,25 +53,36 @@ public class MeshGenerator : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        octaveLayers = octaveSlider.value;
+        frequency = frequencySlider.value;
+        scale = scaleSlider.value;
+
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            CalculateOffsets();
-            CreateShape();
-            UpdateMesh();
+            loadingText.SetActive(true);
+
+            if (loadingText.activeInHierarchy)
+            {
+                CalculateOffsets();
+                CreateShape();
+                UpdateMesh();
+                loadingText.SetActive(false);
+            }
         }
     }
 
     void CreateShape()
     {
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        
+        minHeight = 0;
+        maxHeight = 0;
+
         for (int i = 0, z = 0; z <= zSize; z++)
         {
             for (int x = 0; x <= xSize; x++)
             {
                 float y = CalculateHeight(x, z);
-                if (y > 0) { y = -(y); }
-                vertices[i] = new Vector3(x, y * scale, z);
+                vertices[i] = new Vector3(x, y, z);
 
                 if (y > maxHeight) { maxHeight = y; }
                 if (y < minHeight) { minHeight = y; }
@@ -95,6 +122,9 @@ public class MeshGenerator : MonoBehaviour
             for (int x = 0; x <= xSize; x++)
             {
                 float height = Mathf.InverseLerp(minHeight, maxHeight, vertices[i].y);
+                Debug.Log("min: " + minHeight);
+                Debug.Log("max: " + maxHeight);
+                Debug.Log("height: " + height);
                 colours[i] = gradient.Evaluate(height);
                 i++;
             }
@@ -112,18 +142,43 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    public float CalculateHeight(int x, int z)
+    public float CalculateHeight(float x, float z)
     {
-        float xCoord = (float)x / scale + offsetX;
-        float zCoord = (float)z / scale + offsetZ;
+        float xCoord = (float)(x / xSize) + offsetX;
+        float zCoord = (float)(z / zSize) + offsetZ;
 
-        return Mathf.PerlinNoise(xCoord, zCoord);
+        float noise = Mathf.PerlinNoise(xCoord * MountainFrequencies, zCoord * MountainFrequencies) * MountainAmplitude;
+
+        for (int i = 0; i <= octaveLayers; i++)
+        {
+            //noise += Mathf.PerlinNoise(xCoord * layer1Frequencies, zCoord * layer1Frequencies) * layer1Amplitude;
+
+            noise += Mathf.PerlinNoise(xCoord * frequency, zCoord * frequency) * frequency
+            + .25f * Mathf.PerlinNoise(xCoord * 20, zCoord * 20)
+            + (.25f/2) * Mathf.PerlinNoise(xCoord * 64, zCoord * 64);
+        }
+
+        noise = Mathf.Pow(noise, scale);
+        return noise;
     }
 
     public void CalculateOffsets()
     {
         offsetX = Random.Range(0f, 99999f);
         offsetZ = Random.Range(0f, 99999f);
+    }
+
+    public void Noise(float nx, float ny)
+    {
+        //return CalculateHeight(nx, ny) / 2 + 0.5;
+    
+    }
+
+    public void OnClickPreset()
+    {
+        octaveSlider.value = 1;
+        frequencySlider.value = 3;
+        scaleSlider.value = 2;
     }
 
     private void OnDrawGizmos()
