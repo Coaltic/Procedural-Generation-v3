@@ -46,9 +46,9 @@ public class MeshGenerator : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
 
         CalculateOffsets();
-
         CreateShape();
         UpdateMesh();
+
     }
 
     private void Update()
@@ -69,6 +69,8 @@ public class MeshGenerator : MonoBehaviour
                 loadingText.SetActive(false);
             }
         }
+
+        
     }
 
     void CreateShape()
@@ -81,7 +83,7 @@ public class MeshGenerator : MonoBehaviour
         {
             for (int x = 0; x <= xSize; x++)
             {
-                float y = CalculateHeight(x, z);
+                float y = CalculateHeight(x, z, frequency, scale);
                 vertices[i] = new Vector3(x, y, z);
 
                 if (y > maxHeight) { maxHeight = y; }
@@ -142,23 +144,26 @@ public class MeshGenerator : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    public float CalculateHeight(float x, float z)
+    public float CalculateHeight(float x, float z, float freq, float amp)
     {
-        float xCoord = (float)(x / xSize) + offsetX;
-        float zCoord = (float)(z / zSize) + offsetZ;
+        float xCoord = (float)(x / xSize);// + offsetX;
+        float zCoord = (float)(z / zSize);// + offsetZ;
 
-        float noise = Mathf.PerlinNoise(xCoord * MountainFrequencies, zCoord * MountainFrequencies) * MountainAmplitude;
+        float noise = PerlinNoise2D(xCoord, zCoord, freq, amp); ;
 
-        for (int i = 0; i <= octaveLayers; i++)
+        for (int i = 1, power = 2; i <= octaveLayers; i++)
         {
-            //noise += Mathf.PerlinNoise(xCoord * layer1Frequencies, zCoord * layer1Frequencies) * layer1Amplitude;
-
-            noise += Mathf.PerlinNoise(xCoord * frequency, zCoord * frequency) * frequency
-            + .25f * Mathf.PerlinNoise(xCoord * 20, zCoord * 20)
-            + (.25f/2) * Mathf.PerlinNoise(xCoord * 64, zCoord * 64);
+            noise += PerlinNoise2D(xCoord, zCoord, freq * power, amp / power);
+            power = power * power;
         }
 
         noise = Mathf.Pow(noise, scale);
+        return noise;
+    }
+
+    public float PerlinNoise2D(float x, float z, float freq, float amp)
+    {
+        float noise = Mathf.PerlinNoise(x * freq, z * freq) * amp;
         return noise;
     }
 
